@@ -1,56 +1,30 @@
 <!doctype html>
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DualView Browser 80:20</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Google + YouTube DualView</title>
 <style>
 :root{--bg:#0b1220;--panel:#111827;--line:#38bdf8;--text:#e5e7eb;--muted:#94a3b8}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
-header{height:112px;padding:10px 12px;background:#111827;border-bottom:1px solid #263244}
-.top{display:flex;align-items:center;gap:10px;margin-bottom:9px}.brand{font-weight:800;white-space:nowrap}.ratio{color:#7dd3fc;font-weight:700}.hint{color:var(--muted);font-size:12px}
-.controls{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px}
-.addr{display:flex;gap:6px;min-width:0}input{width:100%;min-width:0;background:#0b1220;color:white;border:1px solid #334155;border-radius:9px;padding:10px 12px;outline:none}input:focus{border-color:#38bdf8;box-shadow:0 0 0 3px #38bdf833}
-button{border:0;border-radius:9px;padding:9px 12px;background:#0284c7;color:white;font-weight:700;cursor:pointer}button.secondary{background:#334155}.presets{display:flex;gap:5px}button:hover{filter:brightness(1.12)}
-#workspace{height:calc(100vh - 112px);display:flex;min-width:0}.pane{min-width:0;height:100%;position:relative;background:white}.pane iframe{width:100%;height:100%;border:0;background:white}
-#left{width:80%}#right{width:20%}.divider{width:10px;flex:0 0 10px;background:#1e293b;cursor:col-resize;position:relative;touch-action:none}.divider:after{content:"";position:absolute;left:3px;top:45%;width:4px;height:10%;min-height:42px;border-radius:9px;background:var(--line)}
-.badge{position:absolute;top:8px;left:8px;z-index:3;background:#0f172acc;color:#fff;padding:5px 8px;border-radius:7px;font-size:12px;pointer-events:none}
-.fullscreen-btn{position:absolute;top:8px;right:8px;z-index:4;background:#0284c7cc;padding:7px 10px;font-size:12px;backdrop-filter:blur(6px)}
-.pane:fullscreen,.pane.fullscreen-fallback{width:100%!important;height:100%!important;background:#fff}.pane:fullscreen iframe,.pane.fullscreen-fallback iframe{width:100%;height:100%}
-.pane.fullscreen-fallback{position:fixed;inset:0;z-index:9999}.pane.fullscreen-fallback .fullscreen-btn{background:#dc2626}
-body.fullscreen-mode header{display:none}body.fullscreen-mode #workspace{height:100vh}
-@media(max-width:720px){header{height:172px}.controls{grid-template-columns:1fr auto}.presets{grid-column:1/-1}#workspace{height:calc(100vh - 172px)}}
-</style>
-</head>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{height:116px;padding:9px 12px;background:var(--panel);border-bottom:1px solid #334155}.top{display:flex;gap:10px;align-items:center;margin-bottom:8px}.brand{font-weight:800}.ratio{color:#7dd3fc;font-weight:800}.hint{font-size:12px;color:var(--muted)}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bar{display:flex;gap:6px;min-width:0}.bar input{flex:1;min-width:0;padding:9px 11px;border:1px solid #334155;border-radius:8px;background:#0b1220;color:white}.bar button,.presets button{border:0;border-radius:8px;padding:8px 11px;background:#0284c7;color:white;font-weight:700;cursor:pointer}.presets{display:flex;gap:5px;margin-top:7px}.presets button{background:#334155}.presets .active{background:#0284c7}
+#workspace{height:calc(100% - 116px);display:flex;min-width:0}.pane{position:relative;min-width:0;height:100%;background:white;color:#111827;overflow:hidden}#left{width:80%}#right{width:20%}.divider{width:10px;flex:0 0 10px;background:#1e293b;cursor:col-resize;position:relative;touch-action:none}.divider:after{content:"";position:absolute;left:3px;top:42%;width:4px;height:70px;border-radius:8px;background:var(--line)}
+.pane-head{position:absolute;z-index:5;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;pointer-events:none}.tag,.full{border:0;border-radius:7px;padding:6px 9px;background:#0f172dcc;color:white;font-size:12px}.full{background:#0284c7;cursor:pointer;pointer-events:auto}.google-home{height:100%;display:grid;place-items:center;padding:18px;background:#fff}.google-box{width:min(620px,92%);text-align:center}.google-logo{font-size:clamp(42px,8vw,76px);font-weight:700;letter-spacing:-5px;margin-bottom:22px}.google-logo span:nth-child(1),.google-logo span:nth-child(4){color:#4285f4}.google-logo span:nth-child(2),.google-logo span:nth-child(6){color:#ea4335}.google-logo span:nth-child(3){color:#fbbc05}.google-logo span:nth-child(5){color:#34a853}.search{display:flex;gap:8px}.search input{flex:1;min-width:0;padding:13px 16px;border:1px solid #cbd5e1;border-radius:24px;font-size:16px}.search button{border:0;border-radius:22px;background:#4285f4;color:white;padding:0 18px;font-weight:700}.note{font-size:12px;color:#64748b;margin-top:15px}iframe{width:100%;height:100%;border:0;background:#000}.yt-empty{height:100%;display:grid;place-items:center;text-align:center;padding:20px;background:#0f0f0f;color:white}.yt-empty b{font-size:24px}.fullscreen-mode header{display:none}.fullscreen-mode #workspace{height:100%}.pane:fullscreen{width:100%!important;height:100%!important}.pane:fullscreen .pane-head{top:10px}
+@media(max-width:700px){header{height:172px}.controls{grid-template-columns:1fr}.presets{overflow-x:auto}#workspace{height:calc(100% - 172px)}.hint{display:none}.bar button{padding:8px}.google-logo{letter-spacing:-3px}}
+</style></head>
 <body>
-<header>
- <div class="top"><div class="brand">DualView Browser</div><div class="ratio" id="ratio">80 : 20</div><div class="hint">ลากเส้นกลางเพื่อปรับสัดส่วนอิสระ</div></div>
- <div class="controls">
-  <form class="addr" id="form1"><input id="url1" aria-label="เว็บด้านซ้าย" value="https://www.bing.com" placeholder="URL ด้านซ้าย"><button>เปิด</button></form>
-  <button class="secondary" id="reload1" type="button">↻ ซ้าย</button>
-  <form class="addr" id="form2"><input id="url2" aria-label="เว็บด้านขวา" value="https://www.wikipedia.org" placeholder="URL ด้านขวา"><button>เปิด</button></form>
-  <button class="secondary" id="reload2" type="button">↻ ขวา</button>
-  <div class="presets"><button type="button" data-r="80">80:20</button><button type="button" data-r="70">70:30</button><button type="button" data-r="50">50:50</button><button type="button" data-r="30">30:70</button><button type="button" id="swap">สลับเว็บ</button></div>
- </div>
-</header>
-<main id="workspace">
- <section class="pane" id="left"><span class="badge">หน้าจอ 1</span><button class="fullscreen-btn" id="full1" type="button" aria-label="เต็มหน้าจอฝั่งซ้าย">⛶ เต็มจอ</button><iframe id="frame1" title="หน้าจอเว็บ 1" src="https://www.bing.com"></iframe></section>
- <div class="divider" id="divider" role="separator" aria-orientation="vertical" aria-label="ปรับสัดส่วนหน้าจอ" tabindex="0"></div>
- <section class="pane" id="right"><span class="badge">หน้าจอ 2</span><button class="fullscreen-btn" id="full2" type="button" aria-label="เต็มหน้าจอฝั่งขวา">⛶ เต็มจอ</button><iframe id="frame2" title="หน้าจอเว็บ 2" src="https://www.wikipedia.org"></iframe></section>
-</main>
+<header><div class="top"><span class="brand">Google + YouTube</span><span class="ratio" id="ratio">80 : 20</span><span class="hint">ลากเส้นกลางเพื่อปรับสัดส่วน</span></div>
+<div class="controls"><form class="bar" id="googleTop"><input id="googleInput" placeholder="ค้นหาด้วย Google"><button>ค้นหา</button></form><form class="bar" id="youtubeTop"><input id="youtubeInput" placeholder="วางลิงก์ YouTube หรือ Video ID"><button>เล่น</button></form></div>
+<div class="presets"><button data-r="80" class="active">80:20</button><button data-r="70">70:30</button><button data-r="50">50:50</button><button data-r="30">30:70</button></div></header>
+<main id="workspace"><section class="pane" id="left"><div class="pane-head"><span class="tag">Google Search</span><button class="full" data-full="left">⛶ เต็มจอ</button></div><div class="google-home"><div class="google-box"><div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div><form class="search" id="googleInner"><input id="googleInnerInput" placeholder="พิมพ์คำค้นหา"><button>ค้นหา</button></form><div class="note">ผลการค้นหาจะเปิดในแท็บใหม่ เนื่องจาก Google ไม่อนุญาตให้แสดงใน iframe</div></div></div></section>
+<div class="divider" id="divider"></div><section class="pane" id="right"><div class="pane-head"><span class="tag">YouTube Player</span><button class="full" data-full="right">⛶ เต็มจอ</button></div><div id="youtubeArea" class="yt-empty"><div><b>YouTube</b><p>วางลิงก์วิดีโอด้านบน แล้วกด “เล่น”</p></div></div></section></main>
 <script>
-(()=>{const ws=document.getElementById('workspace'),left=document.getElementById('left'),right=document.getElementById('right'),divider=document.getElementById('divider'),ratio=document.getElementById('ratio');let pct=80,drag=false;
-function setRatio(v){pct=Math.max(10,Math.min(90,Math.round(v)));left.style.width=`calc(${pct}% - 5px)`;right.style.width=`calc(${100-pct}% - 5px)`;ratio.textContent=`${pct} : ${100-pct}`;divider.setAttribute('aria-valuenow',pct)}
-function norm(v){v=v.trim();if(!v)return 'about:blank';if(/^https?:\/\//i.test(v)||v.startsWith('about:'))return v;return 'https://'+v}
-function load(i){const input=document.getElementById('url'+i),frame=document.getElementById('frame'+i);input.value=norm(input.value);frame.src=input.value}
-['1','2'].forEach(i=>{document.getElementById('form'+i).addEventListener('submit',e=>{e.preventDefault();load(i)});document.getElementById('reload'+i).addEventListener('click',()=>{const f=document.getElementById('frame'+i);f.src=f.src})});
-document.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>setRatio(+b.dataset.r)));
-document.getElementById('swap').addEventListener('click',()=>{const u1=document.getElementById('url1'),u2=document.getElementById('url2'),f1=document.getElementById('frame1'),f2=document.getElementById('frame2');[u1.value,u2.value]=[u2.value,u1.value];[f1.src,f2.src]=[f2.src,f1.src]});
-function move(x){const r=ws.getBoundingClientRect();setRatio((x-r.left)/r.width*100)}
-divider.addEventListener('pointerdown',e=>{drag=true;divider.setPointerCapture(e.pointerId)});divider.addEventListener('pointermove',e=>{if(drag)move(e.clientX)});divider.addEventListener('pointerup',()=>drag=false);divider.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')setRatio(pct-2);if(e.key==='ArrowRight')setRatio(pct+2)});
-async function toggleFullscreen(id,btn){const pane=document.getElementById(id);try{if(document.fullscreenElement){await document.exitFullscreen();return}if(pane.requestFullscreen){await pane.requestFullscreen();return}}catch(e){}const active=pane.classList.toggle('fullscreen-fallback');document.body.classList.toggle('fullscreen-mode',active);btn.textContent=active?'✕ ออกจากเต็มจอ':'⛶ เต็มจอ'}
-document.getElementById('full1').addEventListener('click',()=>toggleFullscreen('left',document.getElementById('full1')));document.getElementById('full2').addEventListener('click',()=>toggleFullscreen('right',document.getElementById('full2')));
-document.addEventListener('fullscreenchange',()=>{const active=!!document.fullscreenElement;document.body.classList.toggle('fullscreen-mode',active);document.getElementById('full1').textContent=document.fullscreenElement?.id==='left'?'✕ ออกจากเต็มจอ':'⛶ เต็มจอ';document.getElementById('full2').textContent=document.fullscreenElement?.id==='right'?'✕ ออกจากเต็มจอ':'⛶ เต็มจอ'});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.fullscreen-fallback').forEach(x=>x.classList.remove('fullscreen-fallback'));document.body.classList.remove('fullscreen-mode');document.getElementById('full1').textContent='⛶ เต็มจอ';document.getElementById('full2').textContent='⛶ เต็มจอ'}});setRatio(80)})();
-</script>
-</body></html>
+(()=>{const left=document.getElementById('left'),right=document.getElementById('right'),ws=document.getElementById('workspace'),divider=document.getElementById('divider'),ratioLabel=document.getElementById('ratio');let ratio=80,drag=false;
+function setRatio(v){ratio=Math.max(10,Math.min(90,Math.round(v)));left.style.width=`calc(${ratio}% - 5px)`;right.style.width=`calc(${100-ratio}% - 5px)`;ratioLabel.textContent=`${ratio} : ${100-ratio}`;document.querySelectorAll('[data-r]').forEach(b=>b.classList.toggle('active',+b.dataset.r===ratio))}
+function google(q){q=String(q||'').trim();if(!q)return;window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener')}
+function videoId(v){v=String(v||'').trim();try{if(/^[\w-]{11}$/.test(v))return v;const u=new URL(v);if(u.hostname.includes('youtu.be'))return u.pathname.split('/')[1];if(u.pathname.startsWith('/shorts/'))return u.pathname.split('/')[2];if(u.pathname.startsWith('/embed/'))return u.pathname.split('/')[2];return u.searchParams.get('v')}catch{return null}}
+function youtube(v){const id=videoId(v);const area=document.getElementById('youtubeArea');if(!id){area.className='yt-empty';area.innerHTML='<div><b>ลิงก์ไม่ถูกต้อง</b><p>ตัวอย่าง: https://www.youtube.com/watch?v=VIDEO_ID</p></div>';return}area.className='';area.innerHTML=`<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen src="https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1"></iframe>`}
+document.getElementById('googleTop').addEventListener('submit',e=>{e.preventDefault();google(document.getElementById('googleInput').value)});document.getElementById('googleInner').addEventListener('submit',e=>{e.preventDefault();google(document.getElementById('googleInnerInput').value)});document.getElementById('youtubeTop').addEventListener('submit',e=>{e.preventDefault();youtube(document.getElementById('youtubeInput').value)});document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>setRatio(+b.dataset.r));
+divider.onpointerdown=e=>{drag=true;divider.setPointerCapture(e.pointerId)};divider.onpointermove=e=>{if(drag){const r=ws.getBoundingClientRect();setRatio((e.clientX-r.left)/r.width*100)}};divider.onpointerup=()=>drag=false;
+document.querySelectorAll('[data-full]').forEach(b=>b.onclick=async()=>{const pane=document.getElementById(b.dataset.full);if(document.fullscreenElement)await document.exitFullscreen();else await pane.requestFullscreen()});document.addEventListener('fullscreenchange',()=>document.body.classList.toggle('fullscreen-mode',!!document.fullscreenElement));setRatio(80)})();
+</script></body></html>
